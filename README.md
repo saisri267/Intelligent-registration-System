@@ -1,55 +1,76 @@
-# Intelligent-registration-System
-A clean, responsive registration form built using HTML, CSS, and JavaScript. The project includes real-time validation, dynamic dropdowns, password strength checking, auto-save drafts, dark mode, voice input, and a confirmation modal. It is designed to look modern and behave like a production-level form.
+Here is your updated **GitHub-style README** with clean installation commands added.
+Short, simple, and readable.
 
-Features
+---
 
-Real-time field validation
+# Intelligent Registration System
 
-Dynamic country-state-city dropdowns
+A clean, responsive registration form built using HTML, CSS, and JavaScript. The system includes real-time validation, dynamic dropdown logic, password strength checking, auto-save drafts, dark mode, voice input, and a confirmation modal. It behaves like a production-level form with smart UI features and automation support.
 
-Password strength and crack-time estimation
+## **Features**
 
-Auto-save drafts with localStorage
+Real-time validation, dynamic country–state–city dropdowns, password strength and crack-time estimation, auto-save drafts, phone auto-formatting, email reputation checks, dark mode toggle, voice input support, summary modal, progress bar, confetti animation, Selenium-based automation testing.
 
-Phone number auto-formatting
+## **Tech Stack**
 
-Email reputation checks (best-effort)
+* HTML
+* CSS
+* JavaScript
+* Selenium (Python)
 
-Dark mode toggle
+## **Installation**
 
-Voice input support
+Clone the repository:
 
-Summary preview modal
+```
+git clone https://github.com/saisri267/Intelligent-registration-System.git
+```
 
-Progress bar for form completion
+Navigate into the project directory:
 
-Confetti animation on success
+```
+cd Intelligent-registration-System
+```
 
-Selenium automation test scripts
+## **Running the Project**
 
-Tech Stack
+Open the form in any browser:
 
-HTML
+```
+index.html
+```
 
-CSS
+## **Automation Setup**
 
-Vanilla JavaScript
+Install required Python packages:
 
-Selenium (Python) for automation testing
+```
+pip install selenium
+```
 
+If you use a virtual environment:
 
-How to Run
+```
+python -m venv venv
+venv\Scripts\activate
+pip install selenium
+```
 
-Download or clone the project
+Make sure ChromeDriver is installed and added to PATH:
 
-Open index.html in any browser
+```
+chromedriver --version
+```
 
-For automation tests:
+To run any test script:
 
-Install Python and Selenium
+```
+cd automation
+python test_positive.py
+python test_negative.py
+python test_logic.py
+```
 
-Run test scripts inside the automation folder
+## **Automation Scripts**
 
-Automation Scripts
-
-Includes positive, negative, and logical flow test cases. Screenshots are generated automatically during execution.
+Includes automated positive, negative, and logical flow test cases. Screenshots are generated automatically during execution.
