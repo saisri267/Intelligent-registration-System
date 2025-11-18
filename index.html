@@ -1,0 +1,168 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1"/>
+  <title>Intelligent Registration System</title>
+  <link rel="stylesheet" href="styles.css"/>
+</head>
+<body>
+
+  <!-- Dark Mode Toggle -->
+  <button id="themeToggle" class="theme-toggle">🌙 Dark Mode</button>
+
+  <!-- Progress Bar -->
+  <div id="progressContainer">
+    <div id="progressBar" aria-valuemin="0" aria-valuemax="100"></div>
+  </div>
+
+  <main class="container" aria-labelledby="formTitle">
+    <h1 id="formTitle">Intelligent Registration System</h1>
+
+    <form id="regForm" novalidate>
+
+      <!-- Row 1: First/Last Name -->
+      <div class="row">
+        <div class="field">
+          <label for="firstName">First Name *</label>
+          <input id="firstName" type="text" autocomplete="given-name"/>
+          <small class="error" id="err-firstName"></small>
+        </div>
+
+        <div class="field">
+          <label for="lastName">Last Name *</label>
+          <input id="lastName" type="text" autocomplete="family-name"/>
+          <small class="error" id="err-lastName"></small>
+        </div>
+      </div>
+
+      <!-- Row 2: Email / Phone -->
+      <div class="row">
+        <div class="field">
+          <label for="email">Email *</label>
+          <input id="email" type="email" autocomplete="email"/>
+          <button type="button" id="checkEmailBtn" class="mini-btn">Check Email</button>
+          <small id="emailHint" class="muted"></small>
+          <small class="error" id="err-email"></small>
+        </div>
+
+        <div class="field">
+          <label for="phone">Phone *</label>
+          <input id="phone" type="tel" placeholder="+911234567890" autocomplete="tel"/>
+          <small class="error" id="err-phone"></small>
+        </div>
+      </div>
+
+      <!-- Row 3: Age & Gender -->
+      <div class="row">
+        <div class="field">
+          <label for="age">Age</label>
+          <input id="age" type="number" min="0"/>
+        </div>
+
+        <div class="field">
+          <label>Gender *</label>
+          <div class="inline" role="radiogroup">
+            <label><input type="radio" name="gender" value="Male"/> Male</label>
+            <label><input type="radio" name="gender" value="Female"/> Female</label>
+            <label><input type="radio" name="gender" value="Other"/> Other</label>
+          </div>
+          <small class="error" id="err-gender"></small>
+        </div>
+      </div>
+
+      <!-- Address -->
+      <div class="field">
+        <label for="address">Address</label>
+        <textarea id="address" rows="2"></textarea>
+      </div>
+
+      <!-- Row 4: Country / State / City -->
+      <div class="row">
+        <div class="field">
+          <label for="country">Country *</label>
+          <select id="country">
+            <option value="">Select country</option>
+          </select>
+          <small class="error" id="err-country"></small>
+        </div>
+
+        <div class="field">
+          <label for="state">State *</label>
+          <select id="state">
+            <option value="">Select state</option>
+          </select>
+          <small class="error" id="err-state"></small>
+        </div>
+
+        <div class="field">
+          <label for="city">City *</label>
+          <select id="city">
+            <option value="">Select city</option>
+          </select>
+          <small class="error" id="err-city"></small>
+        </div>
+      </div>
+
+      <!-- Password Row -->
+      <div class="row">
+        <div class="field">
+          <label for="password">Password *</label>
+          <input id="password" type="password" autocomplete="new-password"/>
+          <meter id="pwdMeter" min="0" max="10" value="0"></meter>
+          <small id="pwdStrength" class="muted"></small>
+          <small class="error" id="err-password"></small>
+        </div>
+
+        <div class="field">
+          <label for="confirmPassword">Confirm Password *</label>
+          <input id="confirmPassword" type="password"/>
+          <small class="error" id="err-confirmPassword"></small>
+        </div>
+      </div>
+
+      <!-- Terms -->
+      <div class="field checkbox">
+        <label><input id="terms" type="checkbox"/> I accept Terms & Conditions *</label>
+        <small class="error" id="err-terms"></small>
+      </div>
+
+      <!-- Voice & Reset -->
+      <div class="actions">
+        <button type="button" id="voiceBtn" class="voice-btn">🎤 Voice Fill</button>
+        <button type="button" id="clearSaved" class="mini-btn danger">Clear Draft</button>
+      </div>
+
+      <!-- Form Actions -->
+      <div class="actions">
+        <button id="previewBtn" type="button" class="primary">Preview</button>
+        <button id="submitBtn" type="submit" class="success">Submit</button>
+        <button id="resetBtn" type="button" class="warn">Reset</button>
+      </div>
+
+      <!-- System message -->
+      <div id="formMessage" class="form-message" aria-live="polite"></div>
+    </form>
+  </main>
+
+  <!-- Summary Modal -->
+  <div id="summaryModal" class="modal" aria-hidden="true">
+    <div class="modal-content">
+      <button id="modalClose" class="modal-close">✖</button>
+      <h2>Summary</h2>
+      <div id="summaryBody"></div>
+      <div class="modal-actions">
+        <button id="editBtn" class="warn">Edit</button>
+        <button id="confirmSubmitBtn" class="success">Confirm & Submit</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Confetti Canvas -->
+  <canvas id="confettiCanvas"></canvas>
+
+  <!-- JS -->
+  <script src="app.js"></script>
+
+</body>
+</html>
