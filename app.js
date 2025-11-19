@@ -1,21 +1,3 @@
-/* ================================================================
-   Intelligent Registration System - Final Professional Version
-   Features:
-   - Dark Mode
-   - Autosave Draft
-   - Debounce Validation
-   - Advanced Password Strength + Crack-Time Estimator
-   - Email Reputation + Availability Check (Mock)
-   - Phone Auto-Format
-   - IP Auto-Fill
-   - Progress Bar
-   - Summary Modal Before Submit
-   - Voice Assistant for Autofill
-   - Confetti on Success
-   - Super RESET (cleans everything)
-==================================================================*/
-
-/* ----------------------- GLOBAL CONFIG ------------------------ */
 const DATA = {
   "India": { code:"+91", states:{
     "Telangana":["Hyderabad","Warangal","Nizamabad"],
@@ -37,11 +19,11 @@ const MOCK_TAKEN_EMAILS = ["existing@example.com","student@frugal.com"];
 
 const LS_KEY = "regform_v3_draft";
 
-/* ---------------------- DOM SHORTCUTS ------------------------- */
+/*DOM SHORTCUTS  */
 const $ = id => document.getElementById(id);
 const form = $('regForm');
 
-/* ---------------------- BASIC UTILITIES ------------------------ */
+/* BASIC UTILITIES*/
 function debounce(fn, delay=300){
   let timer; 
   return (...args)=>{ clearTimeout(timer); timer=setTimeout(()=>fn(...args), delay); };
@@ -57,9 +39,7 @@ function clearErrors(){
 }
 function elText(id,txt){ if($(id)) $(id).textContent = txt; }
 
-/* ================================================================
-   DARK MODE
-================================================================ */
+/* DARK MODE */
 function applyTheme(t){
   if(t==="dark"){
     document.documentElement.classList.add("dark");
@@ -82,9 +62,7 @@ function initTheme(){
   };
 }
 
-/* ================================================================
-   LOCATION POPULATION
-================================================================ */
+/* LOCATION POPULATION */
 function populateCountries(){
   const c = $('country');
   Object.keys(DATA).forEach(k=>{
@@ -113,9 +91,7 @@ function populateCities(country,state){
   });
 }
 
-/* ================================================================
-   PHONE AUTO-FORMAT
-================================================================ */
+/*  PHONE AUTO-FORMAT */
 function formatPhone(raw){
   let s = raw.replace(/[^\d+]/g,'');
   if(!s.startsWith("+")) return s;
@@ -128,9 +104,7 @@ function formatPhone(raw){
   return cc+" "+rest;
 }
 
-/* ================================================================
-   EMAIL INTELLIGENCE
-================================================================ */
+/* EMAIL INTELLIGENCE */
 async function checkEmailReputation(email){
   if(!email.includes("@")){ elText("emailHint",""); return; }
   const domain = email.split("@")[1].toLowerCase();
@@ -157,9 +131,7 @@ function mockEmailAvailability(email){
   });
 }
 
-/* ================================================================
-   PASSWORD STRENGTH + CRACK TIME
-================================================================ */
+/* PASSWORD STRENGTH + CRACK TIME */
 function scorePassword(pwd){
   if(!pwd) return 0;
   let score = 0;
@@ -207,9 +179,7 @@ function updatePwdStrength(){
   $('pwdStrength').textContent = msg;
 }
 
-/* ================================================================
-   VALIDATION ENGINE
-================================================================ */
+/*  VALIDATION ENGINE */
 function validateFields(show=true){
   clearErrors();
   let ok = true;
@@ -250,9 +220,7 @@ function validateFields(show=true){
   return ok;
 }
 
-/* ================================================================
-   AUTOSAVE & RESTORE
-================================================================ */
+/* AUTOSAVE & RESTORE */
 function saveDraft(){
   const d = {
     firstName:$('firstName').value,
@@ -300,9 +268,7 @@ function restoreDraft(){
   updatePwdStrength();
 }
 
-/* ================================================================
-   IP AUTO-FILL
-================================================================ */
+/* IP AUTO-FILL */
 async function autofillLocation(){
   try{
     const res=await fetch("https://ipapi.co/json");
@@ -323,9 +289,7 @@ async function autofillLocation(){
   }catch{}
 }
 
-/* ================================================================
-   SUMMARY MODAL
-================================================================ */
+/* SUMMARY MODAL */
 function buildSummary(){
   const f = (id)=>$(id).value || "<i>none</i>";
   return `
@@ -351,9 +315,7 @@ function closeModal(){
   $('summaryModal').setAttribute("aria-hidden","true");
 }
 
-/* ================================================================
-   PROGRESS BAR
-================================================================ */
+/*  PROGRESS BAR */
 function updateProgress(){
   const fields = ["firstName","lastName","email","phone","country","state","city","password","confirmPassword"];
   let filled = 0;
@@ -365,9 +327,7 @@ function updateProgress(){
   $('progressBar').setAttribute("aria-valuenow",pct);
 }
 
-/* ================================================================
-   VOICE INPUT
-================================================================ */
+/* VOICE INPUT */
 let recognition;
 function initVoice(){
   const btn = $('voiceBtn');
@@ -386,9 +346,7 @@ function initVoice(){
   btn.onclick=()=>recognition.start();
 }
 
-/* ================================================================
-   CONFETTI
-================================================================ */
+/* CONFETTI */
 function launchConfetti(){
   const canvas = $('confettiCanvas');
   const ctx = canvas.getContext("2d");
@@ -424,9 +382,7 @@ function launchConfetti(){
   frame();
 }
 
-/* ================================================================
-   SUPER RESET
-================================================================ */
+/*SUPER RESET */
 function superReset(){
   form.reset();
   clearErrors();
@@ -442,9 +398,7 @@ function superReset(){
   closeModal();
 }
 
-/* ================================================================
-   MAIN ONLOAD LOGIC
-================================================================ */
+/* MAIN ONLOAD LOGIC */
 document.addEventListener("DOMContentLoaded",()=>{
 
   initTheme();
@@ -454,7 +408,7 @@ document.addEventListener("DOMContentLoaded",()=>{
   initVoice();
   updateProgress();
 
-  /* ---------- Cascading selects ---------- */
+  /*  Cascading selects  */
   $('country').addEventListener("change",e=>{
     populateStates(e.target.value);
     updateProgress(); saveDebounced();
@@ -465,7 +419,7 @@ document.addEventListener("DOMContentLoaded",()=>{
   });
   $('city').addEventListener("change",()=>{ updateProgress(); saveDebounced(); });
 
-  /* ---------- Inputs watcher ---------- */
+  /* Inputs watcher */
   const watch = ["firstName","lastName","email","phone","password","confirmPassword","age","address"];
   watch.forEach(id=>{
     $(id).addEventListener("input",debounce(()=>{
@@ -477,12 +431,12 @@ document.addEventListener("DOMContentLoaded",()=>{
     },300));
   });
 
-  /* ---------- Email reputation ---------- */
+  /*  Email reputation */
   $('email').addEventListener("input", debounce(()=>{
     checkEmailReputation($('email').value.trim());
   },500));
 
-  /* ---------- Email availability ---------- */
+  /* Email availability  */
   $('checkEmailBtn').addEventListener("click",async()=>{
     const email=$('email').value.trim();
     if(!email){ elText("emailHint","Enter email to check"); return;}
@@ -492,7 +446,7 @@ document.addEventListener("DOMContentLoaded",()=>{
     else{ elText("emailHint","✓ Email available"); showError("email",""); }
   });
 
-  /* ---------- Modal preview ---------- */
+  /* Modal preview  */
   $('previewBtn').addEventListener("click",()=>{
     const ok = validateFields(false);
     openModal();
@@ -506,7 +460,7 @@ document.addEventListener("DOMContentLoaded",()=>{
     form.dispatchEvent(new Event("submit",{cancelable:true}));
   });
 
-  /* ---------- Final Submit ---------- */
+  /*  Final Submit  */
   form.addEventListener("submit",(e)=>{
     e.preventDefault();
     if(!validateFields(true)){
@@ -524,10 +478,10 @@ document.addEventListener("DOMContentLoaded",()=>{
     setTimeout(()=>superReset(),900);
   });
 
-  /* ---------- Reset button ---------- */
+  /*  Reset button  */
   $('resetBtn').addEventListener("click",superReset);
 
-  /* ---------- Clear saved draft ---------- */
+  /*  Clear saved draft  */
   $('clearSaved').addEventListener("click",()=>{
     localStorage.removeItem(LS_KEY);
     alert("Draft cleared");
